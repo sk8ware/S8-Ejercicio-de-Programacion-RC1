@@ -10,7 +10,6 @@
 #define MAX_POR_UNIDAD 100000
 #define MAX_CAPACIDAD 1000000000000LL
 
-/* Entrada segura: evita el bloqueo del menu por datos no numericos. */
 void leerLinea(char linea[], int capacidad) {
     int c;
     size_t largo;
@@ -24,7 +23,7 @@ void leerLinea(char linea[], int capacidad) {
             linea[largo - 1] = '\0';
             return;
         }
-        /* Descartar el resto de una entrada demasiado larga. */
+    
         if (!feof(stdin)) {
             c = getchar();
             if (c != '\n' && c != EOF) {
@@ -71,7 +70,6 @@ void leerNombre(char nombre[MAX_NOMBRE]) {
     } while (!valido);
 }
 
-/* Compara caracteres sin distinguir mayusculas y minusculas. */
 int nombresIguales(const char a[], const char b[]) {
     int i = 0;
     while (a[i] != '\0' && b[i] != '\0') {
@@ -81,7 +79,6 @@ int nombresIguales(const char a[], const char b[]) {
     return a[i] == '\0' && b[i] == '\0';
 }
 
-/* Busqueda secuencial implementada manualmente; -1 si no existe. */
 int buscarIndice(char nombres[][MAX_NOMBRE], int cantidad, const char nombre[]) {
     for (int i = 0; i < cantidad; i++) {
         if (nombresIguales(nombres[i], nombre)) return i;
@@ -163,7 +160,6 @@ void eliminar(char nombres[][MAX_NOMBRE], int demanda[], int minutos[],
               int recursos[], int *cantidad) {
     int i = solicitarIndice(nombres, *cantidad);
     if (i == -1) return;
-    /* Desplazar todas las columnas para mantener los arreglos sincronizados. */
     for (int j = i; j < *cantidad - 1; j++) {
         strcpy(nombres[j], nombres[j + 1]);
         demanda[j] = demanda[j + 1];
